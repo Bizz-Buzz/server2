@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.creatTableIfNotExists('events', (table) => {
+  return knex.schema.createTableIfNotExists('events', (table) => {
     table.increments('event_id')
     table.integer('user_id')
     table.integer('group_id')

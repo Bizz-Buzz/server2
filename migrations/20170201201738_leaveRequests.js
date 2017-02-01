@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.creatTableIfNotExists('leaveRequests', (table) => {
+  return knex.schema.createTableIfNotExists('leaveRequests', (table) => {
     table.increments('request_id')
     table.integer('user_id')
     table.string('leave_type').defaultTo('sick')

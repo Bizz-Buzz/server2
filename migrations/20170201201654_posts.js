@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.creatTableIfNotExists('posts', (table) => {
+  return knex.schema.createTableIfNotExists('posts', (table) => {
     table.increments('post_id')
     table.integer('user_id')
     table.timestamp('post_created_at').defaultTo(knex.fn.now())

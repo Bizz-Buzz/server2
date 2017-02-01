@@ -1,11 +1,11 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.creatTableIfNotExists('eventResponses', (table) => {
-    knex.increments('event_response_id')
-    knex.integer('event_id')
-    knex.integer('user_id')
-    knex.string('response_content')
-    knex.timestamp('response_created_at').defaultTo(knex.fn.now())
+  return knex.schema.createTableIfNotExists('eventResponses', (table) => {
+    table.increments('event_response_id')
+    table.integer('event_id')
+    table.integer('user_id')
+    table.string('response_content')
+    table.timestamp('response_created_at').defaultTo(knex.fn.now())
   })
 };
 

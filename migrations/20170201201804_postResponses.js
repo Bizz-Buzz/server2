@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.creatTableIfNotExists('postResponse', (table) => {
+  return knex.schema.createTableIfNotExists('postResponse', (table) => {
     table.increments('post_response_id')
     table.string('response_content')
     table.integer('post_id')
