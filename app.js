@@ -13,6 +13,7 @@ const corsOptions = {
 const passport = require('./passport')
 
 var users = require('./routes/users');
+var events = require('./routes/events');
 
 var app = express();
 
@@ -25,5 +26,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/api/v1/users', users);
+app.use('/api/v1/events', events)
 
 module.exports = app;
