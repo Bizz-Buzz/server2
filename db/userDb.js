@@ -18,7 +18,7 @@ createNewUser = (first_name, last_name, email, password) => {
 }
 
 module.exports = {
-  getUserByEmail,
+  getUserByName,
   getUserById,
   createNewUser
 }
