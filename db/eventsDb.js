@@ -4,11 +4,13 @@ const knex = Knex(config)
 
 getAllEvents = () => {
 	return knex('events')
+		.join('users', 'events.user_id', 'users.user_id')
+
 }
 
-createEvent = ({title, user_id, group_id, description, date_time}) => {
+createEvent = (data) => {
 	return knex('events')
-		.insert({title, user_id, group_id, description, date_time})
+		.insert(data)
 }
 
 module.exports = {
