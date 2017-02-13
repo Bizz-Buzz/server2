@@ -5,7 +5,7 @@ const db = require('./db/userDb')
 
 passport.use(new Strategy((username, password, done) => {
   console.log({username, password});
-  db.getUserByUser(username)
+  db.getUserByName(username)
     .then((user) => {
       if (user.length === 0) done(null, false)
       else {
