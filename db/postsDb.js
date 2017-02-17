@@ -8,9 +8,9 @@ getAllPosts = () => {
 
 }
 
-createPost = (data) => {
+createPost = (user_id, content) => {
 	return knex('posts')
-		.insert(data)
+		.insert({user_id, content})
 }
 
 module.exports = {

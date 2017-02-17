@@ -9,12 +9,12 @@ passport.use(new Strategy((username, password, done) => {
     .then((user) => {
       if (user.length === 0) done(null, false)
       else {
-        done(null, user[0])
-        // bcrypt.compare(password, user[0].password, (err, valid) => {
-        //   if (err) done(err)
-        //   else if (valid) done(null, user[0])
-        //   else done(null, false)
-        // })
+        // done(null, user[0])
+        bcrypt.compare(password, user[0].password, (err, valid) => {
+          if (err) done(err)
+          else if (valid) done(null, user[0])
+          else done(null, false)
+        })
       }
     })
     .catch((err) => {
