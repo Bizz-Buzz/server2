@@ -14,4 +14,12 @@ router.get('/', function(req, res, next) {
     })
 });
 
+router.post('/new', function(req, res, next) {
+  res.send(req.user)
+  // postsDb.createPost(req.user.user_id, req.data)
+  //   .then((response) => {
+  //     res.send(response)
+  //   })
+})
+
 module.exports = router
