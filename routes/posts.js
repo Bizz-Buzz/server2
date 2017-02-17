@@ -15,8 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
-  console.log(req.user);
-  postsDb.createPost(req.user.user_id, req.data)
+  postsDb.createPost(req.user.user_id, req.body.content)
     .then((response) => {
       res.send({post_id: response})
     })
