@@ -5,6 +5,7 @@ const knex = Knex(config)
 getAllPosts = () => {
 	return knex('posts')
 		.join('users', 'posts.user_id', 'users.user_id')
+		.orderBy('post_created_at', 'desc')
 
 }
 
