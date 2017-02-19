@@ -14,7 +14,21 @@ createPost = (user_id, content) => {
 		.insert({user_id, content})
 }
 
+getPostResponses = (post_id) => {
+	return knex ('postResponses')
+		.join('users', 'postResponses.user_id', 'users.user_id')
+		.where('postResponses.post_id', post_id)
+		.orderBy('post_response_created_at', 'desc')
+}
+
+createPostResponse = (post_id, user_id, response_content) => {
+	return knex('postResponses')
+		.insert({post_id, user_id, response_content})
+}
+
 module.exports = {
   getAllPosts,
-	createPost
+	createPost,
+	getPostResponses,
+	createPostResponse
 }
