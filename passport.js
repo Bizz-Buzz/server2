@@ -9,11 +9,18 @@ passport.use(new Strategy((username, password, done) => {
     .then((user) => {
       if (user.length === 0) done(null, false)
       else {
+        console.log("user exists");
         // done(null, user[0])
         bcrypt.compare(password, user[0].password, (err, valid) => {
+          console.log("checking password");
           if (err) done(err)
-          else if (valid) done(null, user[0])
-          else done(null, false)
+          else if (valid) {
+            console.log("valid");
+            done(null, user[0])
+          } else {
+            console.log("invalid");
+            done(null, false)
+          }
         })
       }
     })
