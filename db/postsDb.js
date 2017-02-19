@@ -26,9 +26,16 @@ createPostResponse = (post_id, user_id, response_content) => {
 		.insert({post_id, user_id, response_content})
 }
 
+setPostResponses = (post_id, responses) => {
+	return knex('posts')
+		.update('responses', responses)
+		.where('post_id', post_id)
+}
+
 module.exports = {
   getAllPosts,
 	createPost,
 	getPostResponses,
-	createPostResponse
+	createPostResponse,
+	setPostResponses
 }

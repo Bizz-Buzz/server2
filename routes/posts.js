@@ -31,7 +31,13 @@ router.get('/responses', function(req, res) {
 router.post('/responses', function(req, res) {
   postsDb.createPostResponse(req.body.post_id, req.user.user_id, req.body.response_content)
     .then((response_id) => {
-      res.json(response_id[0])
+      postsDb.getPostResponses(req.body.post_id)
+        .then((responses) => {
+          postsDb.setPostResponses(req.body.post_id, responses.length)
+            .then((something) => {
+              res.json(response_id[0])
+            })
+        })
     })
 })
 
