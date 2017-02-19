@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     table.timestamp('post_created_at').defaultTo(knex.fn.now())
     table.string('content')
     table.integer('group_id')
-    table.integer('respones').defaultTo(0)
+    table.integer('responses').defaultTo(0)
   })
 };
 
