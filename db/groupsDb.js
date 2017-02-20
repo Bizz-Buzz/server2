@@ -14,8 +14,25 @@ getGroupsByUser = (user_id) => {
 		.where('joins.user_id', user_id)
 }
 
+createNewGroup = (group_name, group_description, invite_only, parent_id) => {
+	return knex('groups')
+		.insert({group_name, group_description, invite_only, parent_id})
+}
+
+createGroupJoin = (group_id, user_id, isAdmin) => {
+	return knex('joins')
+		.insert({group_id, user_id, isAdmin})
+}
+
+getGroupById = (group_id) => {
+	return knex('groups')
+		.where('group_id', group_id)
+}
 
 module.exports = {
 	getGroupsByUser,
-	getGroupsNotJoinedByUser
+	getGroupsNotJoinedByUser,
+	createNewGroup,
+	createGroupJoin,
+	getGroupById
 }

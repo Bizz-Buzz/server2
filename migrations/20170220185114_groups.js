@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.timestamp('group_created_at').defaultTo(knex.fn.now())
     table.integer('parent_id').defaultTo(null)
     table.string('group_description').defaultTo('')
+    table.boolean('invite_only').defaultTo(true)
   })
 };
 
