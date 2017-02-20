@@ -15,6 +15,7 @@ const passport = require('./passport')
 var users = require('./routes/users');
 var events = require('./routes/events');
 var posts = require('./routes/posts')
+var groups = require('./routes/groups')
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(passport.session())
 app.use('/api/v1/users', users)
 app.use('/api/v1/events', events)
 app.use('/api/v1/posts', posts)
+app.use('/api/v1/groups', groups)
 // app.use('/api/v1/posts', posts)
 
 module.exports = app;
