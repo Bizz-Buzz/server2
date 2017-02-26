@@ -13,16 +13,19 @@ router.get('/', function(req, res, next) {
 		})
 });
 
-router.get('/unjoined', function(req, res, next) {
-	groupsDb.getGroupsNotJoinedByUser(req.user.user_id)
+router.get('/find', function(req, res, next) {
+	groupsDb.getGroupsByUser(req.user.user_id)
 		.then((groups) => {
-			res.json(groups)
+      var unjoined = groups.map(group => group.group_id)
+      groupsDb.getGroupsNotJoinedByUser(unjoined, req.user.user_id)
+        .then(unjoinedGroups => {
+          res.json(unjoinedGroups)
+        })
 		})
 })
 
 router.post('/new', function(req, res) {
-	const {group_name, group_description, invite_only, parent_id} = req.body
-	groupsDb.createNewGroup(group_name, group_description, invite_only, parent_id)
+	groupsDb.createNewGroup(req.body.group_name, req.body.group_description, req.body.invite_only, req.body.parent_id)
 		.then(group_id => {
 			console.log({group_id});
 			groupsDb.createGroupJoin(group_id[0], req.user.user_id, true)
