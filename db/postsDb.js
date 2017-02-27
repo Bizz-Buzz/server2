@@ -9,9 +9,9 @@ getAllPosts = () => {
 
 }
 
-createPost = (user_id, content) => {
+createPost = (user_id, content, is_alert) => {
 	return knex('posts')
-		.insert({user_id, content})
+		.insert({user_id, content, is_alert})
 }
 
 getPostResponses = (post_id) => {

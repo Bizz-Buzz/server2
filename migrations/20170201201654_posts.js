@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.string('content')
     table.integer('group_id')
     table.integer('responses').defaultTo(0)
+    table.boolean('is_alert').defaultTo(false)
   })
 };
 

@@ -6,13 +6,20 @@ var passport = require('../passport')
 const userDb = require('../db/userDb')
 const eventsDb = require('../db/eventsDb')
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  userDb.getUserById(1)
-    .then((users) => {
-      res.json(users[0])
+function ensureAuthenticated (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  } else {
+    res.json({
+      'error':
+      {
+        'type': 'auth',
+        'code': 401,
+        'message': 'authentication failed'
+      }
     })
-});
+  }
+}
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   console.log(req.user);
