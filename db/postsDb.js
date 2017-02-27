@@ -5,13 +5,20 @@ const knex = Knex(config)
 getAllPosts = () => {
 	return knex('posts')
 		.join('users', 'posts.user_id', 'users.user_id')
+		.join('groups', 'posts.group_id', 'groups.group_id')
 		.orderBy('post_created_at', 'desc')
-
 }
 
-createPost = (user_id, content) => {
+createPost = (user_id, content, is_alert, group_id) => {
 	return knex('posts')
-		.insert({user_id, content})
+		.insert({user_id, content, is_alert, group_id})
+}
+
+getPostById = (post_id) => {
+	return knex('posts')
+	.join('users', 'posts.user_id', 'users.user_id')
+	.join('groups', 'posts.group_id', 'groups.group_id')
+	.where('posts.post_id', post_id)
 }
 
 getPostResponses = (post_id) => {
@@ -35,6 +42,7 @@ setPostResponses = (post_id, responses) => {
 module.exports = {
   getAllPosts,
 	createPost,
+	getPostById,
 	getPostResponses,
 	createPostResponse,
 	setPostResponses

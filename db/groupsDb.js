@@ -2,10 +2,15 @@ const Knex = require('knex')
 const config = require('../knexfile')[ process.env.NODE_ENV || 'development' ]
 const knex = Knex(config)
 
-getGroupsNotJoinedByUser = (user_id) => {
+getAllGroups = () => {
 	return knex('groups')
-		.join('joins', 'groups.group_id', "joins.group_id")
-		.whereNot('joins.user_id', user_id)
+		.where('invite_only', false)
+}
+
+getGroupsNotJoinedByUser = (groupIds, user_id) => {
+	return knex('groups')
+		.whereNotIn('group_id', groupIds)
+		.andWhere('user_id', user_id)
 }
 
 getGroupsByUser = (user_id) => {
@@ -30,6 +35,7 @@ getGroupById = (group_id) => {
 }
 
 module.exports = {
+	getAllGroups,
 	getGroupsByUser,
 	getGroupsNotJoinedByUser,
 	createNewGroup,
