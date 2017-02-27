@@ -23,13 +23,10 @@ function ensureAuthenticated (req, res, next) {
 }
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log(req.user);
   groupsDb.getGroupsByUser(req.user.user_id)
     .then((groups) => {
-      console.log({groups});
       groupsDb.getGroupById(1)
         .then((currentGroup) => {
-          console.log({currentGroup});
           res.json({user: req.user, groups, currentGroup})
         })
     })

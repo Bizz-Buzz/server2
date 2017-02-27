@@ -30,9 +30,12 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 });
 
 router.post('/new', ensureAuthenticated, function(req, res, next) {
-  postsDb.createPost(req.user.user_id, req.body.content, req.body.is_alert)
+  postsDb.createPost(req.user.user_id, req.body.content, req.body.is_alert, req.body.group_id)
     .then((response) => {
-      res.json({post_id: response[0]})
+      postsDb.getAllPosts()
+        .then((posts) => {
+          res.json(posts)
+        })
     })
 })
 
