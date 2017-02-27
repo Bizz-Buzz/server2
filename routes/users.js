@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt')
 var passport = require('../passport')
 const userDb = require('../db/userDb')
 const eventsDb = require('../db/eventsDb')
+const groupsDb = require('../db/groupsDb')
 
 function ensureAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
@@ -23,13 +24,17 @@ function ensureAuthenticated (req, res, next) {
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   console.log(req.user);
-  eventsDb.getAllEvents()
-    .then(events => {
-      res.json({user: req.user, events})
+  groupsDb.getGroupsByUser(req.user.user_id)
+    .then((groups) => {
+      console.log({groups});
+      groupsDb.getGroupById(1)
+        .then((currentGroup) => {
+          console.log({currentGroup});
+          res.json({user: req.user, groups, currentGroup})
+        })
     })
     .catch(err => {
-      res.status(400)
-      res.send(err)
+      res.json(err)
     })
 })
 
