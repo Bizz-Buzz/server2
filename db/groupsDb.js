@@ -31,7 +31,8 @@ createGroupJoin = (group_id, user_id, isAdmin) => {
 
 getGroupById = (group_id) => {
 	return knex('groups')
-		.where('group_id', group_id)
+		.where('groups.group_id', group_id)
+		.join('joins', 'groups.group_id', 'joins.group_id')
 }
 
 module.exports = {
