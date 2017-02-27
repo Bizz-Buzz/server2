@@ -29,16 +29,35 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 });
 
 router.get('/find', ensureAuthenticated, function(req, res, next) {
-  console.log("find group");
-	groupsDb.getGroupsByUser(req.user.user_id)
-		.then((groups) => {
-      var joined = groups.map(group => group.group_id)
-      console.log({joined});
-      groupsDb.getGroupsNotJoinedByUser(joined, req.user.user_id)
-        .then(unjoinedGroups => {
-          res.json(unjoinedGroups)
+  groupsDb.getAllGroups()
+    .then((all_groups) => {
+      groupsDb.getGroupsByUser(req.user.user_id)
+        .then((userGroups) => {
+          var joined_ids = userGroups.map((group) => group.group_id)
+          res.json(filterGroups(all_groups, joined_ids))
+          // var unjoined = groups.filter((group) => {
+          //   return groupIds.includes(1)
+          // })
+          // res.json(unjoined)
         })
-		})
+    })
+
+  function filterGroups(groups, ids) {
+    console.log({groups, ids});
+    var filtered = []
+    for (var i = 0; i < groups.length; i++) {
+      for (var j = 0; j < ids.length; j++) {
+        if (groups[i].group_id === ids[j]) {
+          console.log("already joined", i, j);
+          break
+        } else if (j === ids.length - 1) {
+          console.log("unjoined", i, j);
+          filtered.push(groups[i])
+        }
+      }
+    }
+    return filtered
+  }
 })
 
 router.post('/new', ensureAuthenticated, function(req, res) {
