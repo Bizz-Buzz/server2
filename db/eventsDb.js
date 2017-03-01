@@ -34,11 +34,25 @@ clearExistingRSVP = (event_id, user_id) => {
 		.del()
 }
 
+getRSVPsByEvent = (event_id) => {
+	return knex('eventRSVP')
+		.where('event_id', event_id)
+}
+
+updateRSVPCount = (event_id, RSVP_count) => {
+	console.log({event_id, RSVP_count});
+	return knex('events')
+		.where('event_id', event_id)
+		.update({RSVP_count})
+}
+
 module.exports = {
   getAllEvents,
 	createEvent,
 	getEventById,
 	getRSVPByUser,
 	createEventRSVP,
-	clearExistingRSVP
+	clearExistingRSVP,
+	getRSVPsByEvent,
+	updateRSVPCount
 }

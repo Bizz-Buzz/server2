@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
     table.integer('year_id')
     table.timestamp('event_created_at').defaultTo(knex.fn.now())
     table.string('description').defaultTo('')
-    table.integer('rsvpCount').defaultTo(0)
+    table.integer('RSVP_count').defaultTo(0)
   })
 };
 

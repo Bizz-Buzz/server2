@@ -49,10 +49,22 @@ router.post('/RSVP/new', ensureAuthenticated, function(req, res) {
     .then((RSVP) => {
         eventsDb.createEventRSVP(req.body.event_id, req.body.going, req.user.user_id)
           .then((RSVP_id) => {
-            eventsDb.getRSVPByUser(req.user.user_id)
+            eventsDb.getRSVPsByEvent(req.body.event_id)
               .then((RSVPs) => {
-                res.json(RSVPs)
+                var attendingCount = RSVPs.filter((RSVP) => {
+                  return RSVP.going == true
+                }).length
+                console.log({attendingCount});
+                eventsDb.updateRSVPCount(req.body.event_id, attendingCount)
+                  .then((krang) => {
+                    console.log({krang});
+                    eventsDb.getRSVPByUser(req.user.user_id)
+                      .then((RSVPs) => {
+                        res.json(RSVPs)
+                      })
+                  })
               })
+
           })
     })
 })
