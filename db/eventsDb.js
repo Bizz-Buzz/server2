@@ -15,6 +15,7 @@ createEvent = (minute_id, hour_id, day_id, month_id, year_id, group_id, descript
 getEventById = (event_id) => {
 	return knex('events')
 		.where('event_id', event_id)
+		.join('users', 'events.user_id', 'users.user_id')
 }
 
 getRSVPByUser = (user_id) => {
@@ -40,10 +41,15 @@ getRSVPsByEvent = (event_id) => {
 }
 
 updateRSVPCount = (event_id, RSVP_count) => {
-	console.log({event_id, RSVP_count});
 	return knex('events')
 		.where('event_id', event_id)
 		.update({RSVP_count})
+}
+
+getAttendingEvent = (event_id) => {
+	return knex('eventRSVP')
+		.join('users', 'eventRSVP.user_id', 'users.user_id')
+		.where('eventRSVP.event_id', event_id)
 }
 
 module.exports = {
@@ -54,5 +60,6 @@ module.exports = {
 	createEventRSVP,
 	clearExistingRSVP,
 	getRSVPsByEvent,
-	updateRSVPCount
+	updateRSVPCount,
+	getAttendingEvent
 }
