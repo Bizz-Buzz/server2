@@ -8,12 +8,18 @@ getAllEvents = () => {
 
 }
 
-createEvent = (data) => {
+createEvent = (minute_id, hour_id, day_id, month_id, year_id, group_id, description, title) => {
 	return knex('events')
-		.insert(data)
+		.insert({minute_id, hour_id, day_id, month_id, year_id, group_id, description, title})
+}
+
+getEventById = (event_id) => {
+	return knex('events')
+		.where('event_id', event_id)
 }
 
 module.exports = {
   getAllEvents,
-	createEvent
+	createEvent,
+	getEventById
 }

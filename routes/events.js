@@ -29,5 +29,17 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
     })
 });
 
+router.post('/new', ensureAuthenticated, function(req, res) {
+  console.log("new event", req.body);
+  const {minute_id, hour_id, day_id, month_id, year_id, group_id, description, title} = req.body
+  eventsDb.createEvent(minute_id, hour_id, day_id, month_id, year_id, group_id, description, title)
+    .then((event_id) => {
+      eventsDb.getEventById(event_id[0])
+        .then((event) => {
+          res.json(event[0])
+        })
+    })
+})
+
 
 module.exports = router;
