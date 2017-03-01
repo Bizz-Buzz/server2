@@ -22,17 +22,19 @@ function ensureAuthenticated (req, res, next) {
 
 /* GET users listing. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  console.log("events requested");
-  eventsDb.getAllEvents()
+  eventsDb.getAllEvents(req.user.user_id)
     .then((events) => {
-      res.json(events)
+      eventsDb.getRSVPByUser(req.user.user_id)
+        .then((RSVPs) => {
+          res.json({events, RSVPs})
+        })
     })
 });
 
 router.post('/new', ensureAuthenticated, function(req, res) {
   console.log("new event", req.body);
   const {minute_id, hour_id, day_id, month_id, year_id, group_id, description, title} = req.body
-  eventsDb.createEvent(minute_id, hour_id, day_id, month_id, year_id, group_id, description, title)
+  eventsDb.createEvent(minute_id, hour_id, day_id, month_id, year_id, group_id, description, title, req.user.user_id)
     .then((event_id) => {
       eventsDb.getEventById(event_id[0])
         .then((event) => {
@@ -40,6 +42,43 @@ router.post('/new', ensureAuthenticated, function(req, res) {
         })
     })
 })
+
+router.post('/RSVP/new', ensureAuthenticated, function(req, res) {
+  console.log(req.body);
+  eventsDb.clearExistingRSVP(req.body.event_id, req.user.user_id)
+    .then((RSVP) => {
+        eventsDb.createEventRSVP(req.body.event_id, req.body.going, req.user.user_id)
+          .then((RSVP_id) => {
+            eventsDb.getRSVPsByEvent(req.body.event_id)
+              .then((RSVPs) => {
+                var attendingCount = RSVPs.filter((RSVP) => {
+                  return RSVP.going == true
+                }).length
+                console.log({attendingCount});
+                eventsDb.updateRSVPCount(req.body.event_id, attendingCount)
+                  .then((krang) => {
+                    console.log({krang});
+                    eventsDb.getRSVPByUser(req.user.user_id)
+                      .then((RSVPs) => {
+                        res.json(RSVPs)
+                      })
+                  })
+              })
+
+          })
+    })
+})
+
+// router.post('/RSVP/new', ensureAuthenticated, function(req, res) {
+//   console.log(req.body);
+//   eventsDb.createEventRSVP(req.body.event_id, req.body.going, req.user.user_id)
+//     .then((RSVP_id) => {
+//       eventsDb.getRSVPByUser(req.user.user_id)
+//         .then((RSVPs) => {
+//           res.json(RSVPs)
+//         })
+//     })
+// })
 
 
 module.exports = router;

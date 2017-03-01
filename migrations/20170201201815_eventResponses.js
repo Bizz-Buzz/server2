@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments('event_response_id')
     table.integer('event_id')
     table.integer('user_id')
+    table.integer('group_id')
     table.string('response_content')
     table.timestamp('response_created_at').defaultTo(knex.fn.now())
   })
