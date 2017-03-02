@@ -40,7 +40,7 @@ router.post('/new', ensureAuthenticated, function(req, res, next) {
 })
 
 router.get('/responses', ensureAuthenticated, function(req, res) {
-  postsDb.getPostResponses(req.query.post_id)
+  postsDb.getPostResponses(Number(req.query.post_id))
     .then((postResponses) => {
       res.json(postResponses)
     })

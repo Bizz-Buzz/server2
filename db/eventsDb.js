@@ -14,7 +14,7 @@ createEvent = (minute_id, hour_id, day_id, month_id, year_id, group_id, descript
 
 getEventById = (event_id) => {
 	return knex('events')
-		.where('event_id', event_id)
+		.where('event_id', Number(event_id))
 }
 
 getRSVPByUser = (user_id) => {
