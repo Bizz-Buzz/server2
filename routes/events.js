@@ -32,9 +32,9 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 });
 
 router.post('/new', ensureAuthenticated, function(req, res) {
+  const body = req.body
   console.log("new event", req.body);
-  const {minute_id, hour_id, day_id, month_id, year_id, group_id, description, title} = req.body
-  eventsDb.createEvent(minute_id, hour_id, day_id, month_id, year_id, group_id, description, title, req.user.user_id)
+  eventsDb.createEvent(req.body.minute_id, req.body.hour_id, req.body.day_id, req.body.month_id, req.body.year_id, req.body.group_id, req.body.description, req.body.title, req.user.user_id)
     .then((event_id) => {
       console.log({event_id});
       eventsDb.getEventById(event_id[0])
@@ -42,7 +42,9 @@ router.post('/new', ensureAuthenticated, function(req, res) {
           res.json(event[0])
         })
     })
-    .catch((err) => console.log((err));)
+    .catch((err) => {
+      console.log((err))
+    })
 })
 
 router.post('/RSVP/new', ensureAuthenticated, function(req, res) {
