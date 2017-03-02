@@ -36,11 +36,13 @@ router.post('/new', ensureAuthenticated, function(req, res) {
   const {minute_id, hour_id, day_id, month_id, year_id, group_id, description, title} = req.body
   eventsDb.createEvent(minute_id, hour_id, day_id, month_id, year_id, group_id, description, title, req.user.user_id)
     .then((event_id) => {
+      console.log({event_id});
       eventsDb.getEventById(event_id[0])
         .then((event) => {
           res.json(event[0])
         })
     })
+    .catch((err) => console.log((err));)
 })
 
 router.post('/RSVP/new', ensureAuthenticated, function(req, res) {
