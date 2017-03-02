@@ -22,7 +22,7 @@ function ensureAuthenticated (req, res, next) {
 
 /* GET users listing. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  groupsDb.getGroupsByUser(req.user.user_id)
+  groupsDb.getGroupsByUser(Number(req.user.user_id))
 		.then((groups) => {
 			res.json(groups)
 		})
@@ -31,7 +31,7 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 router.get('/find', ensureAuthenticated, function(req, res, next) {
   groupsDb.getAllGroups()
     .then((all_groups) => {
-      groupsDb.getGroupsByUser(req.user.user_id)
+      groupsDb.getGroupsByUser(Number(req.user.user_id))
         .then((userGroups) => {
           var joined_ids = userGroups.map((group) => group.group_id)
           res.json(filterGroups(all_groups, joined_ids))
@@ -64,7 +64,7 @@ router.post('/new', ensureAuthenticated, function(req, res) {
 	groupsDb.createNewGroup(req.body.group_name, req.body.group_description, req.body.invite_only, Number(req.body.parent_id))
 		.then(group_id => {
 			console.log({group_id});
-			groupsDb.createGroupJoin(group_id[0], req.user.user_id, true)
+			groupsDb.createGroupJoin(group_id[0], Number(req.user.user_id), true)
 				.then(join_id => {
 					console.log({join_id});
 					groupsDb.getGroupById(group_id[0])

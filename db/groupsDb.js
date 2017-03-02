@@ -16,7 +16,7 @@ getGroupsNotJoinedByUser = (groupIds, user_id) => {
 getGroupsByUser = (user_id) => {
 	return knex('groups')
 		.join('joins', 'groups.group_id', 'joins.group_id')
-		.where('joins.user_id', user_id)
+		.where('joins.user_id', Number(user_id))
 }
 
 createNewGroup = (group_name, group_description, invite_only, parent_id) => {

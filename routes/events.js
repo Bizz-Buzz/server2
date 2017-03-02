@@ -22,9 +22,9 @@ function ensureAuthenticated (req, res, next) {
 
 /* GET users listing. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  eventsDb.getAllEvents(req.user.user_id)
+  eventsDb.getAllEvents(Number(req.user.user_id))
     .then((events) => {
-      eventsDb.getRSVPByUser(req.user.user_id)
+      eventsDb.getRSVPByUser(Number(req.user.user_id))
         .then((RSVPs) => {
           res.json({events, RSVPs})
         })
@@ -49,20 +49,20 @@ router.post('/new', ensureAuthenticated, function(req, res) {
 
 router.post('/RSVP/new', ensureAuthenticated, function(req, res) {
   console.log(req.body);
-  eventsDb.clearExistingRSVP(req.body.event_id, req.user.user_id)
+  eventsDb.clearExistingRSVP(Number(req.body.event_id), Number(req.user.user_id))
     .then((RSVP) => {
-        eventsDb.createEventRSVP(req.body.event_id, req.body.going, req.user.user_id)
+        eventsDb.createEventRSVP(Number(req.body.event_id), req.body.going, Number(req.user.user_id))
           .then((RSVP_id) => {
-            eventsDb.getRSVPsByEvent(req.body.event_id)
+            eventsDb.getRSVPsByEvent(Number(req.body.event_id))
               .then((RSVPs) => {
                 var attendingCount = RSVPs.filter((RSVP) => {
                   return RSVP.going == true
                 }).length
                 console.log({attendingCount});
-                eventsDb.updateRSVPCount(req.body.event_id, attendingCount)
+                eventsDb.updateRSVPCount(Number(req.body.event_id), attendingCount)
                   .then((krang) => {
                     console.log({krang});
-                    eventsDb.getRSVPByUser(req.user.user_id)
+                    eventsDb.getRSVPByUser(Number(req.user.user_id))
                       .then((RSVPs) => {
                         res.json(RSVPs)
                       })
