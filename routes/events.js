@@ -34,7 +34,7 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 router.post('/new', ensureAuthenticated, function(req, res) {
   const body = req.body
   console.log("new event", req.body);
-  eventsDb.createEvent(Number(req.body.minute_id), Number(req.body.hour_id), Number(req.body.day_id), Number(req.body.month_id), Number(req.body.year_id), Number(req.body.group_id), req.body.description, req.body.title), Number(req.user.user_id))
+  eventsDb.createEvent(Number(req.body.minute_id), Number(req.body.hour_id), Number(req.body.day_id), Number(req.body.month_id), Number(req.body.year_id), Number(req.body.group_id), req.body.description, req.body.title, Number(req.user.user_id))
     .then((event_id) => {
       console.log({event_id});
       eventsDb.getEventById(event_id[0])
