@@ -22,12 +22,12 @@ getGroupsByUser = (user_id) => {
 
 createNewGroup = (group_name, group_description, invite_only, parent_id) => {
 	return knex('groups')
-		.insert({group_name, group_description, invite_only, parent_id}, group_id)
+		.insert({group_name, group_description, invite_only, parent_id}, 'group_id')
 }
 
 createGroupJoin = (group_id, user_id, isAdmin) => {
 	return knex('joins')
-		.insert({group_id, user_id, isAdmin})
+		.insert({group_id, user_id, isAdmin}, 'join_id')
 }
 
 getGroupById = (group_id) => {

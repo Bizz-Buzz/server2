@@ -9,7 +9,7 @@ getAllEvents = () => {
 
 createEvent = (minute_id, hour_id, day_id, month_id, year_id, group_id, description, title, user_id) => {
 	return knex('events')
-		.insert({minute_id, hour_id, day_id, month_id, year_id, group_id, description, title, user_id}, event_id)
+		.insert({minute_id, hour_id, day_id, month_id, year_id, group_id, description, title, user_id}, 'event_id')
 }
 
 getEventById = (event_id) => {
@@ -24,7 +24,7 @@ getRSVPByUser = (user_id) => {
 
 createEventRSVP = (event_id, going, user_id) => {
 	return knex('eventRSVP')
-		.insert({event_id, going, user_id})
+		.insert({event_id, going, user_id}, 'RSVP_id')
 }
 
 clearExistingRSVP = (event_id, user_id) => {
