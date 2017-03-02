@@ -5,11 +5,14 @@ exports.up = function(knex, Promise) {
     table.integer('user_id')
     table.integer('group_id')
     table.string('title')
-    table.time('time')
-    table.datetime('date_time')
+    table.integer('minute_id')
+    table.integer('hour_id')
+    table.integer('day_id')
+    table.integer('month_id')
+    table.integer('year_id')
     table.timestamp('event_created_at').defaultTo(knex.fn.now())
-    table.string('description').defaultTo(null)
-    table.integer('respones').defaultTo(0)
+    table.string('description').defaultTo('')
+    table.integer('RSVP_count').defaultTo(0)
   })
 };
 
