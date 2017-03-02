@@ -61,7 +61,7 @@ router.get('/find', ensureAuthenticated, function(req, res, next) {
 })
 
 router.post('/new', ensureAuthenticated, function(req, res) {
-	groupsDb.createNewGroup(req.body.group_name, req.body.group_description, req.body.invite_only, req.body.parent_id)
+	groupsDb.createNewGroup(req.body.group_name, req.body.group_description, req.body.invite_only, Number(req.body.parent_id))
 		.then(group_id => {
 			console.log({group_id});
 			groupsDb.createGroupJoin(group_id[0], req.user.user_id, true)
