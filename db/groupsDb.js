@@ -14,6 +14,7 @@ getGroupsNotJoinedByUser = (groupIds, user_id) => {
 }
 
 getGroupsByUser = (user_id) => {
+	console.log({user_id});
 	return knex('groups')
 		.join('joins', 'groups.group_id', 'joins.group_id')
 		.where('joins.user_id', Number(user_id))
@@ -31,8 +32,8 @@ createGroupJoin = (group_id, user_id, isAdmin) => {
 
 getGroupById = (group_id) => {
 	return knex('groups')
-		.where('groups.group_id', group_id)
 		.join('joins', 'groups.group_id', 'joins.group_id')
+		.where('groups.group_id', Number(group_id))
 }
 
 module.exports = {
