@@ -36,11 +36,19 @@ getGroupById = (group_id) => {
 		.where('groups.group_id', Number(group_id))
 }
 
+getAdminGroupsByUser = (user_id) => {
+	return knex('groups')
+		.join('joins', 'groups.group_id', 'joins.group_id')
+		.where('joins.user_id', user_id)
+		.adnWhere('joins.isAdmin', true)
+}
+
 module.exports = {
 	getAllGroups,
 	getGroupsByUser,
 	getGroupsNotJoinedByUser,
 	createNewGroup,
 	createGroupJoin,
-	getGroupById
+	getGroupById,
+	getAdminGroupsByUser
 }
