@@ -41,11 +41,25 @@ deleteAdminMessage = (message_id) => {
     .del()
 }
 
+setLeaveRequestPin = (request_id, is_pinned) => {
+  return knex('leaveRequests')
+    .where('request_id', request_id)
+    .update({is_pinned})
+}
+
+deleteLeaveRequest = (request_id) => {
+  return knex('leaveRequests')
+    .where('request_id', request_id)
+    .del()
+}
+
 module.exports = {
   newLeaveRequest,
   newAdminMessage,
   getAdminMessages,
   getAdminLeaveRequests,
   setAdminMessagePin,
-  deleteAdminMessage
+  deleteAdminMessage,
+  setLeaveRequestPin,
+  deleteLeaveRequest
 }

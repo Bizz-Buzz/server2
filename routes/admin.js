@@ -73,8 +73,22 @@ router.post('/messages/pin', ensureAuthenticated, (req, res) => {
 })
 
 router.post('/messages/delete', ensureAuthenticated, (req, res) => {
-  console.log("delete message", req.body);
   adminDb.deleteAdminMessage(Number(req.body.message_id))
+    .then((response) => {
+      res.json(response)
+    })
+})
+
+router.post('/leaveRequests/pin', ensureAuthenticated, (req, res) => {
+  adminDb.setLeaveRequestPin(Number(req.body.request_id), Boolean(!req.body.is_pinned))
+    .then((response) => {
+      res.json(response)
+    })
+})
+
+router.post('/leaveRequests/delete', ensureAuthenticated, (req, res) => {
+  console.log("delete request", req.body);
+  adminDb.deleteLeaveRequest(Number(req.body.request_id))
     .then((response) => {
       res.json(response)
     })
