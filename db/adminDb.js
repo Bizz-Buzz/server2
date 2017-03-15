@@ -29,9 +29,16 @@ getAdminLeaveRequests = (group_ids) => {
 
 }
 
+setAdminMessagePin = (message_id, is_pinned) => {
+  return knex('adminMessages')
+    .where('message_id', message_id)
+    .update({is_pinned})
+}
+
 module.exports = {
   newLeaveRequest,
   newAdminMessage,
   getAdminMessages,
-  getAdminLeaveRequests
+  getAdminLeaveRequests,
+  setAdminMessagePin
 }

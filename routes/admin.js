@@ -65,5 +65,12 @@ router.get('/', ensureAuthenticated, function(req, res) {
     })
 })
 
+router.post('/messages/pin', ensureAuthenticated, (req, res) => {
+  adminDb.setAdminMessagePin(req.body.message_id, !req.body.is_pinned)
+    .then((response) => {
+      res.json(response)
+    })
+})
+
 
 module.exports = router
