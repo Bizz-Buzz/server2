@@ -35,10 +35,17 @@ setAdminMessagePin = (message_id, is_pinned) => {
     .update({is_pinned})
 }
 
+deleteAdminMessage = (message_id) => {
+  return knex('adminMessages')
+    .where('message_id', message_id)
+    .del()
+}
+
 module.exports = {
   newLeaveRequest,
   newAdminMessage,
   getAdminMessages,
   getAdminLeaveRequests,
-  setAdminMessagePin
+  setAdminMessagePin,
+  deleteAdminMessage
 }

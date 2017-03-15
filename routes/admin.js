@@ -42,13 +42,13 @@ router.post('/messages/new', ensureAuthenticated, function (req, res) {
 })
 
 router.get('/', ensureAuthenticated, function(req, res) {
-  groupsDb.getGroupsByUser(req.user.user_id)
+  groupsDb.getGroupsByUser(Number(req.user.user_id))
     .then(groups => {
       var adminGroups = groups.filter((group) => {
         return group.isAdmin
       })
       adminGroups.forEach((group, index) => {
-        adminGroups[index] = group.group_id
+        adminGroups[index] = Number(group.group_id)
       })
       adminDb.getAdminMessages(adminGroups)
         .then((adminMessages) => {
@@ -66,7 +66,15 @@ router.get('/', ensureAuthenticated, function(req, res) {
 })
 
 router.post('/messages/pin', ensureAuthenticated, (req, res) => {
-  adminDb.setAdminMessagePin(req.body.message_id, !req.body.is_pinned)
+  adminDb.setAdminMessagePin(Number(req.body.message_id), Boolean(!req.body.is_pinned))
+    .then((response) => {
+      res.json(response)
+    })
+})
+
+router.post('/messages/delete', ensureAuthenticated, (req, res) => {
+  console.log("delete message", req.body);
+  adminDb.deleteAdminMessage(Number(req.body.message_id))
     .then((response) => {
       res.json(response)
     })
