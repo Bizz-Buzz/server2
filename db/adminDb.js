@@ -18,7 +18,7 @@ getAdminMessages = (group_ids) => {
     .whereIn('adminMessages.group_id', group_ids)
     .join('users', 'adminMessages.user_id', 'users.user_id')
     .join('groups', 'adminMessages.group_id', 'groups.group_id')
-
+    .orderBy('message_created_at', 'desc')
 }
 
 getAdminLeaveRequests = (group_ids) => {
@@ -26,7 +26,7 @@ getAdminLeaveRequests = (group_ids) => {
     .whereIn('leaveRequests.group_id', group_ids)
     .join('users', 'leaveRequests.user_id', 'users.user_id')
     .join('groups', 'leaveRequests.group_id', 'groups.group_id')
-
+    .orderBy('request_created_at', 'desc')
 }
 
 setAdminMessagePin = (message_id, is_pinned) => {
