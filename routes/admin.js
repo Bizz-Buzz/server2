@@ -24,8 +24,7 @@ function ensureAuthenticated (req, res, next) {
 
 router.post('/leaveRequests/new', ensureAuthenticated, function (req, res) {
   var data = req.body
-  data.user_id = req.user.user_id
-  console.log({data});
+  data.user_id = Number(req.user.user_id)
   adminDb.newLeaveRequest(data)
     .then((leave_request_id) => {
       res.json(leave_request_id)
@@ -34,7 +33,7 @@ router.post('/leaveRequests/new', ensureAuthenticated, function (req, res) {
 
 router.post('/messages/new', ensureAuthenticated, function (req, res) {
   var data = req.body
-  data.user_id = req.user.user_id
+  data.user_id = Number(req.user.user_id)
   adminDb.newAdminMessage(data)
     .then((message_id) => {
       res.json(message_id)
