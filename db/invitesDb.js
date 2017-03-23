@@ -15,7 +15,19 @@ getOutgoingByGroupId = (group_id) => {
     .where('invitesOutgoing.group_id', group_id)
 }
 
+createIncomingInvite = (data) => {
+  return knex('invitesIncoming')
+    .insert(data, 'invite_id')
+}
+
+createOutgoingInvite = (data) => {
+  return knex('invitesOutgoing')
+    .insert(data, 'invite_id')
+}
+
 module.exports = {
   getIncomingByGroupId,
-  getOutgoingByGroupId
+  getOutgoingByGroupId,
+  createIncomingInvite,
+  createOutgoingInvite
 }

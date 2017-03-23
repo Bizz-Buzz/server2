@@ -4,7 +4,6 @@ const knex = Knex(config)
 
 getAllGroups = () => {
 	return knex('groups')
-		.where('invite_only', false)
 }
 
 getGroupsNotJoinedByUser = (groupIds, user_id) => {
@@ -40,7 +39,7 @@ getAdminGroupsByUser = (user_id) => {
 	return knex('groups')
 		.join('joins', 'groups.group_id', 'joins.group_id')
 		.where('joins.user_id', user_id)
-		.adnWhere('joins.isAdmin', true)
+		.andWhere('joins.isAdmin', true)
 }
 
 module.exports = {

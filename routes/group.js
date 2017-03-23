@@ -37,7 +37,22 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
               })
           })
     })
-    //Still needs to interact with incoming/outgoing group invites
 });
+
+router.post('/invites/incoming/new', ensureAuthenticated, (req, res) => {
+  console.log("incoming");
+  invitesDb.createIncomingInvite(req.body)
+    .then((invite_id) => {
+      res.json(invite_id[0])
+    })
+})
+
+router.post('/invites/incoming/new', ensureAuthenticated, (req, res) => {
+  console.log("outgoing");
+  invitesDb.createOutgoingInvite(req.body)
+    .then(invite_id => {
+      res.json(invite_id[0])
+    })
+})
 
 module.exports = router
