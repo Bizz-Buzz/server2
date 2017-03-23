@@ -17,6 +17,7 @@ var events = require('./routes/events');
 var posts = require('./routes/posts')
 var groups = require('./routes/groups')
 var admin = require('./routes/admin')
+var group = require('./routes/group')
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/api/v1/events', events)
 app.use('/api/v1/posts', posts)
 app.use('/api/v1/groups', groups)
 app.use('/api/v1/admin', admin)
+app.use('/api/v1/group', group)
 // app.use('/api/v1/posts', posts)
 
 module.exports = app;
