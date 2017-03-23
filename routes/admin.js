@@ -93,5 +93,4 @@ router.post('/leaveRequests/delete', ensureAuthenticated, (req, res) => {
     })
 })
 
-
 module.exports = router

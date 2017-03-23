@@ -4,6 +4,8 @@ exports.up = function(knex, Promise) {
     table.increments('join_id')
     table.integer('group_id')
     table.integer('user_id')
+    table.boolean('can_create').defaultTo(false)
+    table.boolean('can_invite').defaultTo(false)
     table.boolean('isAdmin').defaultTo(false)
   })
 };

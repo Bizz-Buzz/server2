@@ -48,10 +48,8 @@ router.get('/find', ensureAuthenticated, function(req, res, next) {
     for (var i = 0; i < groups.length; i++) {
       for (var j = 0; j < ids.length; j++) {
         if (groups[i].group_id === ids[j]) {
-          console.log("already joined", i, j);
           break
         } else if (j === ids.length - 1) {
-          console.log("unjoined", i, j);
           filtered.push(groups[i])
         }
       }
