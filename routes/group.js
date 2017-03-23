@@ -24,10 +24,10 @@ function ensureAuthenticated (req, res, next) {
 /* GET users listing. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
   groupDb.getUsersByGroupId(Number(req.query.group_id))
-    .then(users => {
+    .then(groupMembers => {
         groupDb.getGroupSettings(Number(req.query.group_id))
           .then(groupSettings => {
-            res.json({users, groupSettings: groupSettings[0]})
+            res.json({groupMembers, groupSettings: groupSettings[0]})
           })
     })
     //Still needs to interact with incoming/outgoing group invites
