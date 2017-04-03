@@ -17,8 +17,20 @@ createNewUser = (first_name, last_name, email, password) => {
     .insert({first_name, last_name, email, password})
 }
 
+getUserList = (group_id) => {
+  return knex('users')
+}
+
+getUsersByGroup = (group_id) => {
+  return knex('users')
+    .join('joins', 'users.user_id', 'joins.user_id')
+    .where('joins.group_id', group_id)
+}
+
 module.exports = {
   getUserByName,
   getUserById,
-  createNewUser
+  createNewUser,
+  getUserList,
+  getUsersByGroup
 }
